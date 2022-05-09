@@ -1,0 +1,21 @@
+﻿{
+    "manifest_version": 2,
+    "name": "厂站工作票插件",
+    "version": "1.0",
+    "description": "测试右键功能",
+
+	"background":{
+		"scripts":["background.js"]
+	},	
+	"id":"com.fla.www",
+	"content_scripts":[
+	    {
+	        "matches":["<all_urls>"],
+	        "js":["js/jquery.min.js"],
+	        "run_at":"document_end"
+	    }
+	],
+	"permissions":[
+		"contextMenus","tabs", "http://*/*", "https://*/*","file://*/*/*"
+	]
+}
