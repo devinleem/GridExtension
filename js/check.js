@@ -51,6 +51,24 @@ if(true){
 	console.log(ss)
 	var sss = CheckName(ss)
 	console.log(sss)
+	
+	
+	
+	console.log('111')
+	var test  = '检查#3主变压器变高2203开关位置指示正确'
+	console.log(test)
+	var GOT =GetOperationType(test)//获取类型
+	console.log(GOT)
+	var GMN = GetMidName(test)//获取间隔语句
+	console.log(GMN)
+	if(CheckName(GMN)){
+		var kw1 = GetKeyWord1(test)
+		console.log("kw1:"+kw1)
+		console.log(CheckSentence(test,GOT,kw1,GMN))
+	}
+	console.log('111')
+	
+	
 }
 
 
@@ -94,11 +112,11 @@ function CheckName(MidName){
 // 4.获取关键字1 string GetKeyWord1(type,data).返回关键字
 function GetKeyWord1(data){
 	// 截取字符串的前两位字符串
-	var KeyWord1 = data.substring(1)
+	var KeyWord1 = data.substring(0,2)
 	return KeyWord1
 }
 // 5.匹配句型 bool CheckSentence(type，kw1，midName)
-function CheckSentence(type,kw1,midName){
+function CheckSentence(data,type,kw1,midName){
 	var CheckFlag = false
 	if(type=='开关'){
 		// 1.检查关键字为‘断开’的语句
@@ -114,8 +132,46 @@ function CheckSentence(type,kw1,midName){
 					continue
 				}
 			}
-			return CheckFlag
+			// return CheckFlag
 		}
 		// 2.检查关键字为‘检查’的语句
+		else if(kw1=='检查'){
+			console.log("data："+data)
+			var CombinedStatement1 = '检查' + midName +'位置指示正确'
+			var CombinedStatement2 = '检查' + midName +'电流指示正确'
+			var CombinedStatement3 = '检查' + midName +'在分闸位置'
+			console.log('CombinedStatement1:'+CombinedStatement1)
+			console.log('CombinedStatement2:'+CombinedStatement2)
+			console.log('CombinedStatement3:'+CombinedStatement3)
+			// for(var i = 0; i <= ZhanDianData[0][1].length; i++) {
+			// 	console.log("吉安站语句："+ZhanDianData[0][1][i])
+			// 	// if(ZhanDianData[0][1][i]==CombinedStatement1||ZhanDianData[0][1][i]==CombinedStatement2||ZhanDianData[0][1][i]==CombinedStatement3){
+			// 		if(data==CombinedStatement1||data==CombinedStatement2||data==CombinedStatement3){
+			// 		CheckFlag = true
+			// 		break
+			// 	}else{
+			// 		continue
+			// 	}
+			// }
+			if(data==CombinedStatement1||data==CombinedStatement2||data==CombinedStatement3){CheckFlag=true}
+			
+			
+			// return CheckFlag
+		}
+		// 3.检查关键字为‘合上’的语句
+		else if(kw1=='合上'){
+			var CombinedStatement = '合上' + midName +'开关'
+			// 开始跟数组中的语句匹配
+			for (var i = 0; i <= ZhanDianData[0][1].length; i++) {
+				if(CombinedStatement==ZhanDianData[0][1][i]){
+					CheckFlag = true
+					break
+				}else{
+					continue
+				}
+			}
+			
+		}
+		return CheckFlag
 	}
 }
